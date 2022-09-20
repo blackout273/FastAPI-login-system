@@ -10,4 +10,5 @@ def main():
             'status':200
         }
     )
+
 app.include_router(core_router.router, prefix="/home")

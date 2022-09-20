@@ -54,7 +54,7 @@ def openData(token):
     code=None
     decoded=None
     try:
-        decoded = jwt.decode(jwt=token['accessToken'], key=JWT_KEY, algorithms="HS256",leeway=300, options={"verify_signature":True})
+        decoded = jwt.decode(jwt=token['accessToken'], key=JWT_KEY, algorithms="HS256", options={"verify_signature":True})
         code = 200
     except ExpiredSignatureError as ex:
         decoded = f"{ex}"

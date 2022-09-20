@@ -11,10 +11,14 @@ from app.core.routers.schema.user.functions.redis import index as serviceRedis
 JWT_KEY = os.environ.get("JWT_KEY")
 logging.basicConfig(filename="D:/python/sessions/venv/app/core/routers/schema/user/functions/redis/logs/systemLogs.log", level=logging.DEBUG)
 
+v=dict()
+
+
 router = APIRouter()
 @router.post("/login")
-async def main(data:model.Login , response:Response):
+async def main(data:model.Login,idSession:UUID = Depends(functions.Cookies)):
     logging.debug(msg=f"Usuario {data.usuario} solicitou login as {datetime.now()}")
+    await serviceRedis.delete(idSession)
     message="sucesso"
     try:
         Idsession = uuid4()
@@ -87,6 +91,7 @@ async def main(idSession:UUID = Depends(functions.Cookies)):
     payload=None
     code=None
     message=None
+    jsonresponse=None
     newIdSession = uuid4()
     try:
         code=200
